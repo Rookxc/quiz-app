@@ -18,6 +18,10 @@ function Navigation(props){
             <li className="nav-item active">
               <a className="nav-link" href="/login">Login</a>
             </li>
+
+            <li className="nav-item disabled">
+              <a className="nav-link disabled" href="/scoreboard">Scoreboard</a>
+            </li>
           </ul>
         </div>
     </nav>

@@ -29,6 +29,7 @@ function Login(){
     return(
         <div style={{width: "400px", margin: "30px", position: 'absolute', left: '50%', top: '40%', transform: 'translate(-50%, -50%)'}}>
             <form className="form-group " onSubmit={Login}>
+                <h2 style={{marginBottom: "30px"}}> Login </h2>
                 <input
                     style={{marginBottom: "15px"}}
                     type="text"

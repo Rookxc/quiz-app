@@ -10,7 +10,7 @@ import {
 function LandingPage(props){
     return(
         <div  style={{position: 'absolute', left: '50%', top: '40%', transform: 'translate(-50%, -50%)'}}>
-            <h1> Welcome to Quizify! </h1>
+            <h1> Welcome to <i><b>Quizify!</b></i> </h1>
             <h3> Rok Šekoranja | Rookxc </h3>
             <h5> MongoDB | Express.js | React.js | Node.js </h5>
             <div style={{paddingTop: "10px"}}>
