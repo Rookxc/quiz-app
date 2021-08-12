@@ -40,7 +40,7 @@ module.exports = {
             }
             else{
                 req.session.userId = user._id;
-                return res.redirect("profile");
+                return res.status(201).json(user);
             }
         });
     },
