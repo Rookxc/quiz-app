@@ -26,6 +26,8 @@ function Register(){
         setUsername("");
         setPassword("");
         setEmail("");
+
+        window.location.href = "/profile";
     }
 
 

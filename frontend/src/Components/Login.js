@@ -5,6 +5,8 @@ import Button from './Button'
 function Login(){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    var success = true;
+
 
     async function Login(e){
         e.preventDefault();
@@ -20,9 +22,32 @@ function Login(){
             })
         });
 
-        const data = await res.json();
+        var status = await res.status;
+        var data = null;
+
+        if(status === 201){
+            data = await res.json();
+        } 
+        else{
+            success = false;
+        }
+
+        if(success){
+            setUsername(data.username);
+            localStorage.setItem("loggedIn", true);
+            localStorage.setItem("userID", data._id);
+            alert("User: " + data._id + " successfully logged in!");
+        }
+        else{
+            localStorage.setItem("loggedIn", true);
+            localStorage.setItem("userID", "");
+        }
+
+        //const data = await res.json();
         setUsername("");
         setPassword("");
+
+        //window.location.href = "/profile";
     }
 
 
