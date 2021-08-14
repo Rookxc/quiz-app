@@ -28,20 +28,22 @@ module.exports = {
      * questionController.getNewQuestions()
      */
 
-    //retrieving data from API and saving to MongoDB
+    //retrieving 1 question from API and saving to MongoDB
     getNewQuestions: function(req, res){
         const fetch   = require('node-fetch');
 
         var url = 'https://opentdb.com/api.php?amount=1';
         var question, correct_a, incorrect_a;
+        var exists = false;
 
         fetch(url)
             .then(res => res.json())
                 .then(data => {
-                    res.send({ data });
+                    res.send({ data }); 
                     var obj = JSON.parse(JSON.stringify({data}));
 
                     question = obj["data"]["results"][0]["question"];
+                    //question = "Which of these animals is NOT a lizard?";
                     correct_a = obj["data"]["results"][0]["correct_answer"]
                     incorrect_a = [
                         obj["data"]["results"][0]["incorrect_answers"][0],
@@ -58,7 +60,16 @@ module.exports = {
                         ]
                     });
             
-                    question.save();    
+                    //Check if question exists in database
+                    QuestionModel.findOne({question: question}, 
+                    function(err,obj) {
+                         if(obj){
+                             console.log("Ne bo šlo");
+                         }
+                         else{
+                            question.save(); 
+                         }
+                    });
         })       
     },
 
