@@ -11,17 +11,16 @@ import Practice from './Components/Practice';
 import Profile from './Components/Profile';
 
 function App() {
-  const [username, setUsername] = useState([]);
+  const [description, setDescription] = useState([]);
+  const [email, setEmail] = useState([]);
 
   useEffect(function(){
-    const getUser = async function(){
-      const res = await fetch('http://localhost:3001/users');
-      const data = await res.json();
-      console.log(data);
-      setUsername(data[0].username);
+    const getQuestions = async function(){
+      
     }
-    getUser();
-    setUsername("");
+
+    getQuestions();
+
   }, []);
 
 
@@ -45,7 +44,8 @@ function App() {
         <Practice/>
       </Route>
       <Route path="/profile">
-        <Profile username={username}/>
+        <Navigation/>
+        <Profile/>
       </Route>
       </div>
     </BrowserRouter>

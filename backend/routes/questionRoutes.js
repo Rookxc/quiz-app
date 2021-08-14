@@ -6,6 +6,7 @@ var questionController = require('../controllers/questionController.js');
  * GET
  */
 router.get('/', questionController.list);
+router.get('/krompir', questionController.getNewQuestions);
 
 /*
  * GET

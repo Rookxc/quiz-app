@@ -23,6 +23,46 @@ module.exports = {
         });
     },
 
+
+    /**
+     * questionController.getNewQuestions()
+     */
+
+    //retrieving data from API and saving to MongoDB
+    getNewQuestions: function(req, res){
+        const fetch   = require('node-fetch');
+
+        var url = 'https://opentdb.com/api.php?amount=1';
+        var question, correct_a, incorrect_a;
+
+        fetch(url)
+            .then(res => res.json())
+                .then(data => {
+                    res.send({ data });
+                    var obj = JSON.parse(JSON.stringify({data}));
+
+                    question = obj["data"]["results"][0]["question"];
+                    correct_a = obj["data"]["results"][0]["correct_answer"]
+                    incorrect_a = [
+                        obj["data"]["results"][0]["incorrect_answers"][0],
+                        obj["data"]["results"][0]["incorrect_answers"][1],
+                        obj["data"]["results"][0]["incorrect_answers"][2]
+                    ];
+
+
+                    var question = new QuestionModel({
+                        question : question,
+                        correct : correct_a,
+                        incorrect : [ 
+                            incorrect_a[0], incorrect_a[1], incorrect_a[2]
+                        ]
+                    });
+            
+                    question.save();    
+        })       
+    },
+
+
     /**
      * questionController.show()
      */

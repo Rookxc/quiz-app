@@ -36,7 +36,8 @@ function Login(){
             setUsername(data.username);
             localStorage.setItem("loggedIn", true);
             localStorage.setItem("userID", data._id);
-            alert("User: " + data._id + " successfully logged in!");
+            localStorage.setItem("username", data.username);
+            localStorage.setItem("email", data.email);
         }
         else{
             localStorage.setItem("loggedIn", true);
@@ -47,7 +48,7 @@ function Login(){
         setUsername("");
         setPassword("");
 
-        //window.location.href = "/profile";
+        window.location.href = "/profile";
     }
 
 

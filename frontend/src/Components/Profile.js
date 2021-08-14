@@ -1,10 +1,12 @@
-function Profile(props){
+import {useState, useEffect} from 'react';
+import Button from './Button'
+
+function Profile(props){ 
     return(
         <div>
-           <p>Username: </p>
-           <p>{props.username}</p>
-         
-
+           <p>Username: <b>{localStorage.getItem("username")}</b></p>
+           <p>Email: <b>{localStorage.getItem("email")}</b></p>
+           <Button text="Odjava"></Button>
         </div>
     )
 }
