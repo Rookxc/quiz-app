@@ -1,5 +1,4 @@
 import {BrowserRouter, Route } from 'react-router-dom';
-import {useState, useEffect} from 'react';
 import './App.css';
 
 //Components
@@ -11,19 +10,6 @@ import Practice from './Components/Practice';
 import Profile from './Components/Profile';
 
 function App() {
-  const [description, setDescription] = useState([]);
-  const [email, setEmail] = useState([]);
-
-  useEffect(function(){
-    const getQuestions = async function(){
-      
-    }
-
-    getQuestions();
-
-  }, []);
-
-
   return (
     <BrowserRouter>
      <div className="App">

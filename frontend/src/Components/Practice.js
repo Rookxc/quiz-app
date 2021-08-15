@@ -1,7 +1,11 @@
+import Question from './Question';
+
 function Practice(props){
     return(
         <div>
-            tuki pa še pride 
+            <Question>
+
+            </Question>
         </div>
     )
 }

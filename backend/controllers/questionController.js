@@ -30,7 +30,7 @@ module.exports = {
 
     //retrieving 1 question from API and saving to MongoDB
     getNewQuestions: function(req, res){
-        const fetch   = require('node-fetch');
+        const fetch = require('node-fetch');
 
         var url = 'https://opentdb.com/api.php?amount=1';
         var question, correct_a, incorrect_a;
@@ -43,14 +43,12 @@ module.exports = {
                     var obj = JSON.parse(JSON.stringify({data}));
 
                     question = obj["data"]["results"][0]["question"];
-                    //question = "Which of these animals is NOT a lizard?";
                     correct_a = obj["data"]["results"][0]["correct_answer"]
                     incorrect_a = [
                         obj["data"]["results"][0]["incorrect_answers"][0],
                         obj["data"]["results"][0]["incorrect_answers"][1],
                         obj["data"]["results"][0]["incorrect_answers"][2]
                     ];
-
 
                     var question = new QuestionModel({
                         question : question,
