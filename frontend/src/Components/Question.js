@@ -21,6 +21,8 @@ function Question(props){
         setStatus("🖐");
 
         var res = await fetch('http://localhost:3001/questions');
+        await fetch('http://localhost:3001/questions/krompir');
+        
         var data = await res.json();
         const questions = data;
 
@@ -47,7 +49,6 @@ function Question(props){
         if(res.status === 200){ 
             setQuestion(questions[rnd]);
         }
-
     }
 
     //https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
