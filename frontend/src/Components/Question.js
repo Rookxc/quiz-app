@@ -18,7 +18,7 @@ function Question(props){
 
     async function getQuestion(){
         setDisable(false);
-        setStatus("");
+        setStatus("🖐");
 
         var res = await fetch('http://localhost:3001/questions');
         var data = await res.json();
@@ -70,11 +70,11 @@ function Question(props){
         console.log(question.correct);
         if(userAnswers == question.correct){
             setCorrectCount(correctCount+1);
-            setStatus("Correct");
+            setStatus("👍");
         }
         else{
             setIncorrectCount(incorrectCount+1);
-            setStatus("Incorrect");
+            setStatus("👎");
         }
 
         setDisable(true);
@@ -86,23 +86,25 @@ function Question(props){
 
 
     return(
-        <div style={{width: "500px", margin: "30px", position: 'absolute', left: '50%', top: '40%', transform: 'translate(-50%, -50%)', backgroundColor: "#343a40", padding: "30px", borderRadius:"35px"}}>
-        <p key={question._id} style={{color: 'white'}} ><b>{question.question}</b></p>
-        <p>
-            {answers.map((answer) => (
-                <label style={{margin: "15px", color: 'white'}}>
-                    <input style={{color: 'white'}} key={question._id} type="radio" value={answer} onChange={handleChange}/> {answer}
-                </label>
-                
-            ))}
-        </p>
-        <ButtonLight text="Check answer" onClick={CheckAnswer} disabled={disable}></ButtonLight>  
-        <ButtonLight text="Next Question" onClick={getQuestion}></ButtonLight>
+        <div>
+            <div style={{width: "500px", marginTop: "60px", position: 'absolute', left: '50%', top: '40%', transform: 'translate(-50%, -50%)', backgroundColor: "#343a40", padding: "30px", borderRadius:"35px"}}>
+                <p key={question._id} style={{color: 'white'}} ><b>{question.question}</b></p>
+                <p>
+                    {answers.map((answer) => (
+                        <label style={{margin: "15px", color: 'white'}}>
+                            <input style={{color: 'white'}} key={question._id} type="checkbox" value={answer} onChange={handleChange}/> {answer}
+                        </label>
+                            
+                    ))}
+                </p>
+                <ButtonLight text="Check answer" onClick={CheckAnswer} disabled={disable}></ButtonLight>  
+                <ButtonLight text="Next Question" onClick={getQuestion}></ButtonLight>
 
-        <h2 style={{margin: "15px", color: 'gray'}}>{status}</h2>  
-        <h5 style={{margin: "15px", color: 'gray'}}>Correct answers count: {correctCount}</h5>
-        <h5 style={{margin: "15px", color: 'gray'}}>Incorrect answers count: {incorrectCount}</h5>
+                <h2 style={{marginTop: "15px", color: 'gray', fontSize: "50px"}}>{status}</h2>  
+                <h5 style={{marginTop: "30px", color: 'gray'}}>👍 {correctCount} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 👎 {incorrectCount}</h5>
+            </div>
         </div>
+      
     )
 }
 
