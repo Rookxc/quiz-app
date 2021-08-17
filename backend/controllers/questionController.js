@@ -62,7 +62,7 @@ module.exports = {
                     QuestionModel.findOne({question: question}, 
                     function(err,obj) {
                          if(obj){
-                             console.log("Ne bo šlo");
+                            console.log("Ne bo šlo");
                          }
                          else{
                             question.save(); 
