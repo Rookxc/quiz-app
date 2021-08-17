@@ -28,11 +28,50 @@ module.exports = {
     */
     //Pridobi 10 vprašanj (jih shran v nek array) + štarti čas + 
     play: function(req, res){
+        const fetch = require('node-fetch');
+
         //In miliseconds (/1000 => seconds)
         let startingTime = Date.now();
-        
+
+
+        var url = 'http://localhost:3001/questions/getten';
+
+
     },
 
+    /**
+    * playController.getten()
+    */
+    //Gets 10 random questions from database (http://localhost:3001/questions)
+    getten: function(req, res){
+        const fetch = require('node-fetch');
+        var url = 'http://localhost:3001/questions/'
+        var question, correct_a, incorrect_a;
+
+        fetch(url)
+            .then(res => res.json())
+            .then(data =>{
+                res.send({data});
+                var obj = JSON.parse(JSON.stringify({data}));  
+                
+                //Generate random number between: 0 and data.length
+                    const min = 0;
+                    const max = data.length;            
+
+                var tenQuestionArray = new Array(0);
+
+                for(let i = 0; i < 10; i++){
+                    const rnd = parseInt(min + Math.random() * (max - min));
+                    question = obj["data"][rnd];
+                    console.log(question);
+                    
+                    tenQuestionArray.push(question);
+                    console.log(i + "aa" + JSON.stringify(tenQuestionArray[i]));
+                }
+                
+                //dostop do arraya :  tenQuestionArray[i].correct / .question / .incorrect
+        })
+    },
 
     /**
      * playController.show()
