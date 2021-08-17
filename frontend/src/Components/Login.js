@@ -36,8 +36,6 @@ function Login(){
             setUsername(data.username);
             localStorage.setItem("loggedIn", true);
             localStorage.setItem("userID", data._id);
-            localStorage.setItem("username", data.username);
-            localStorage.setItem("email", data.email);
         }
         else{
             localStorage.setItem("loggedIn", true);

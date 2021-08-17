@@ -1,11 +1,5 @@
 import Button from "./Button";
 
-function Logout(){
-  localStorage.setItem("loggedIn", false);
-  localStorage.setItem("username", "");
-  window.location.href = "/";
-}
-
 
 function Navigation(props){
   if(localStorage.getItem("loggedIn") === "false"){
@@ -47,14 +41,17 @@ function Navigation(props){
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">  
               <li className="nav-item active">
+                <a className="nav-link" href="/practice">Practice</a>
+              </li>
+              <li className="nav-item active">
+                <a className="nav-link" href="/play">Play</a>
+              </li>
+              <li className="nav-item active">
                 <a className="nav-link" href="/profile">Profile</a>
               </li>
   
               <li className="nav-item disabled">
                 <a className="nav-link disabled" href="/scoreboard">Scoreboard</a>
-              </li>
-              <li className="nav-item disabled">
-                <Button text="Logout" onClick={Logout}></Button>
               </li>
             </ul>
           </div>

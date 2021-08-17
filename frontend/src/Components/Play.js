@@ -1,6 +1,6 @@
 import Question from './Question';
 
-function Practice(props){
+function Play(props){
     return(
         <div>
             <Question>
@@ -9,4 +9,4 @@ function Practice(props){
     )
 }
 
-export default Practice;
+export default Play;

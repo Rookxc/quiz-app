@@ -11,7 +11,7 @@ function Question(props){
     const [correctCount, setCorrectCount] = useState(0);
     const [incorrectCount, setIncorrectCount] = useState(0);
     const [answers, setAnswers] = useState([]);
-   
+
     useEffect(function(){
          getQuestion();
     }, []);
@@ -22,7 +22,7 @@ function Question(props){
 
         var res = await fetch('http://localhost:3001/questions');
         await fetch('http://localhost:3001/questions/krompir');
-        
+
         var data = await res.json();
         const questions = data;
 
@@ -66,16 +66,16 @@ function Question(props){
     }
 
     var userAnswers = "";
-
+    
     async function CheckAnswer(){
         console.log(question.correct);
         if(userAnswers == question.correct){
             setCorrectCount(correctCount+1);
-            setStatus("👍");
+            setStatus('👍');
         }
         else{
             setIncorrectCount(incorrectCount+1);
-            setStatus("👎");
+            setStatus('👎');
         }
 
         setDisable(true);
@@ -85,28 +85,27 @@ function Question(props){
         userAnswers = e.target.value;
     }
 
-
     return(
-        <div>
-            <div style={{width: "500px", marginTop: "60px", position: 'absolute', left: '50%', top: '40%', transform: 'translate(-50%, -50%)', backgroundColor: "#343a40", padding: "30px", borderRadius:"35px"}}>
-                <p key={question._id} style={{color: 'white'}} ><b>{question.question}</b></p>
-                <p>
-                    {answers.map((answer) => (
-                        <label style={{margin: "15px", color: 'white'}}>
-                            <input style={{color: 'white'}} key={question._id} type="checkbox" value={answer} onChange={handleChange}/> {answer}
-                        </label>
-                            
-                    ))}
-                </p>
-                <ButtonLight text="Check answer" onClick={CheckAnswer} disabled={disable}></ButtonLight>  
-                <ButtonLight text="Next Question" onClick={getQuestion}></ButtonLight>
-
-                <h2 style={{marginTop: "15px", color: 'gray', fontSize: "50px"}}>{status}</h2>  
-                <h5 style={{marginTop: "30px", color: 'gray'}}>👍 {correctCount} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 👎 {incorrectCount}</h5>
+            <div>
+                <div style={{width: "500px", marginTop: "60px", position: 'absolute', left: '50%', top: '40%', transform: 'translate(-50%, -50%)', 
+                backgroundColor: "#343a40", padding: "30px", borderRadius:"35px", borderColor: "gray", borderStyle: "solid", borderWidth: "10px"}}>
+                    <p key={question._id} style={{color: 'white'}} ><b>{question.question}</b></p>
+                    <p>
+                        {answers.map((answer) => (
+                            <label style={{margin: "15px", color: 'white'}}>
+                                <input style={{color: 'white'}} key={question._id} type="checkbox" value={answer} onChange={handleChange}/> {answer}
+                            </label>
+                                
+                        ))}
+                    </p>
+                    <ButtonLight text="Check answer" onClick={CheckAnswer} disabled={disable}></ButtonLight>  
+                    <ButtonLight text="Next Question" onClick={getQuestion}></ButtonLight>
+    
+                    <h2 style={{marginTop: "15px", color: 'gray', fontSize: "50px"}}>{status}</h2>  
+                    <h5 style={{marginTop: "30px", color: 'gray'}}>👍 {correctCount} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 👎 {incorrectCount}</h5>
+                </div>
             </div>
-        </div>
-      
-    )
-}
+        )
+    }
 
 export default Question;
