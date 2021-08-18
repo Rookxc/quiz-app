@@ -8,7 +8,9 @@ var playSchema = new Schema({
 	},
 	'score' : Number,
 	'startingTime' : Date,
-	'endingTime' : Date
+	'endingTime' : Date,
+	'correct': Number,
+	'incorrect': Number
 });
 
 module.exports = mongoose.model('play', playSchema);

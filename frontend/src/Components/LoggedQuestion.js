@@ -13,33 +13,62 @@ function LoggedQuestion(props){
     //var questionCount = 0;
     const [questionCount, setQuestionCount] = useState(0);
 
+    //Saves score to database and redirect
+    async function saveScore(){
+        //Add API url
+        const res = await fetch('http://localhost:3001/play/', {
+            method: 'POST',
+            credentials: 'include',
+            headers:{
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                userID: localStorage.getItem("userID"),
+                correct: correctCount,
+                incorrect: incorrectCount,
+                startingTime: null,
+                edingTime: Date.now(),
+                score: 0,
+            })
+        })
+
+        var status = await res.status;
+        var data = null;
+        
+        if(status === 201){
+            data = await res.json();
+            console.log("Sucess!");
+        }
+        else{
+            console.log("Didn't send");
+        }
+
+
+        setIncorrectCount(0);
+        setCorrectCount(0);
+
+        window.location.href = "/report";
+    }
+
     useEffect(function(){
          getQuestion();
     }, []);
 
     async function getQuestion(){
-        console.log("KAJ " +  questionCount);
-        if(questionCount == 5){
-            console.log("KONC!");
+        if(questionCount == 10){
+            saveScore();       
         }
+
         setQuestionCount(questionCount+1);
 
         setDisable(false);
         setStatus("🖐");
 
         var res = await fetch('http://localhost:3001/play/getten');
-        //await fetch('http://localhost:3001/questions/krompir');
 
         var data = await res.json();
         const questions = data.tenQuestionArray;
         JSON.stringify(questions)
-        //console.log("kurwa?");
-        //console.log(JSON.stringify(questions));
-        //Generate random number between: 0 and 10
-            // const min = 0;
-            // const max = 10;
-            // const rnd = parseInt(min + Math.random() * (max - min));
-            // console.log("RND " + data.length);
         
         //Checks if there are only 2 possible answers
             if(questions[questionCount].correct == "True" || questions[questionCount].correct == "False"){
@@ -53,16 +82,11 @@ function LoggedQuestion(props){
                 answers[3] = questions[questionCount].incorrect[2];
             }
 
-        shuffle(answers);
-        console.log("Pravilni odgovor: " + questions[questionCount].correct)
-        
+        shuffle(answers);        
 
         if(res.status === 200){ 
-            console.log("STEVILKA " + questionCount)
             setQuestion(questions[questionCount]);
         }
-        console.log("TOLEs?");
-        console.log(question);
     }
 
     //https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array

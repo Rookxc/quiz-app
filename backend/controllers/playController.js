@@ -23,21 +23,6 @@ module.exports = {
         });
     },
 
-    /**
-    * playController.play()
-    */
-    //Pridobi 10 vprašanj (jih shran v nek array) + štarti čas + 
-    play: function(req, res){
-        const fetch = require('node-fetch');
-
-        //In miliseconds (/1000 => seconds)
-        let startingTime = Date.now();
-
-
-        var url = 'http://localhost:3001/questions/getten';
-
-
-    },
 
     /**
     * playController.getten()
@@ -46,6 +31,7 @@ module.exports = {
     getten: function(req, res){
         const fetch = require('node-fetch');
         var url = 'http://localhost:3001/questions/'
+        let startingTime = Date.now();
         var question, correct_a, incorrect_a;
 
         fetch(url)
@@ -105,7 +91,9 @@ module.exports = {
 			userID : req.body.userID,
 			score : req.body.score,
 			startingTime : req.body.startingTime,
-			endingTime : req.body.endingTime
+			endingTime : req.body.endingTime,
+            correct:  req.body.correct,
+            incorrect: req.body.incorrect
         });
 
         play.save(function (err, play) {

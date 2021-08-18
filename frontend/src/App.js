@@ -9,6 +9,7 @@ import LandingPage from './Components/LandingPage';
 import Practice from './Components/Practice';
 import Profile from './Components/Profile';
 import Play from './Components/Play';
+import Report from './Components/Report'
 
 function App() {
   return (
@@ -37,6 +38,10 @@ function App() {
       <Route path="/play">
         <Navigation/>
         <Play/>
+      </Route>
+      <Route path="/report">
+        <Navigation/>
+        <Report/>
       </Route>
       </div>
     </BrowserRouter>
