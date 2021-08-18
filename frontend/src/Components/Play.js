@@ -1,10 +1,9 @@
-import Question from './Question';
+import LoggedQuestion from './LoggedQuestion';
 
 function Play(props){
     return(
         <div>
-            <Question>
-            </Question>
+            <LoggedQuestion/>
         </div>
     )
 }

@@ -42,7 +42,7 @@ module.exports = {
     /**
     * playController.getten()
     */
-    //Gets 10 random questions from database (http://localhost:3001/questions)
+    //Gets 10 random questions from database (http://localhost:3001/questions) + Start timer! TODO
     getten: function(req, res){
         const fetch = require('node-fetch');
         var url = 'http://localhost:3001/questions/'
@@ -51,24 +51,24 @@ module.exports = {
         fetch(url)
             .then(res => res.json())
             .then(data =>{
-                res.send({data});
                 var obj = JSON.parse(JSON.stringify({data}));  
                 
                 //Generate random number between: 0 and data.length
-                    const min = 0;
-                    const max = data.length;            
-
+                const min = 0;
+                const max = data.length;            
+                
                 var tenQuestionArray = new Array(0);
-
+                
                 for(let i = 0; i < 10; i++){
                     const rnd = parseInt(min + Math.random() * (max - min));
                     question = obj["data"][rnd];
-                    console.log(question);
+                    //console.log(question);
                     
                     tenQuestionArray.push(question);
-                    console.log(i + "aa" + JSON.stringify(tenQuestionArray[i]));
+                    //console.log(i + "aa" + JSON.stringify(tenQuestionArray[i]));
                 }
                 
+                res.send({tenQuestionArray});
                 //dostop do arraya :  tenQuestionArray[i].correct / .question / .incorrect
         })
     },
