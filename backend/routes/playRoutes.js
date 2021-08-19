@@ -7,6 +7,8 @@ var playController = require('../controllers/playController.js');
  */
 router.get('/', playController.list);
 router.get('/getten', playController.getten);
+router.get('/calculate/:id', playController.calculate);
+router.get('/getuser/:id', playController.getuser)
 /*
  * GET
  */

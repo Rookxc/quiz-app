@@ -12,6 +12,7 @@ function LoggedQuestion(props){
 
     //var questionCount = 0;
     const [questionCount, setQuestionCount] = useState(0);
+    const [startingTime, setStartingTime] = useState();
 
     //Saves score to database and redirect
     async function saveScore(){
@@ -26,8 +27,8 @@ function LoggedQuestion(props){
                 userID: localStorage.getItem("userID"),
                 correct: correctCount,
                 incorrect: incorrectCount,
-                startingTime: null,
-                edingTime: Date.now(),
+                startingTime: sessionStorage.getItem("starting"),
+                endingTime: Date.now(),
                 score: 0,
             })
         })
@@ -47,11 +48,20 @@ function LoggedQuestion(props){
         setIncorrectCount(0);
         setCorrectCount(0);
 
+        //Calculate score and save to database
+        await fetch('http://localhost:3001/play/calculate/' + data._id);
+
+
+
+
         window.location.href = "/report";
     }
 
     useEffect(function(){
          getQuestion();
+         sessionStorage.setItem("starting", Date.now());
+         setStartingTime(Date.now());
+         console.log(startingTime);
     }, []);
 
     async function getQuestion(){
@@ -65,7 +75,7 @@ function LoggedQuestion(props){
         setStatus("🖐");
 
         var res = await fetch('http://localhost:3001/play/getten');
-
+        
         var data = await res.json();
         const questions = data.tenQuestionArray;
         JSON.stringify(questions)

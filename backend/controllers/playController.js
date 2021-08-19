@@ -30,8 +30,8 @@ module.exports = {
     //Gets 10 random questions from database (http://localhost:3001/questions) + Start timer! TODO
     getten: function(req, res){
         const fetch = require('node-fetch');
-        var url = 'http://localhost:3001/questions/'
-        let startingTime = Date.now();
+        var url = 'http://localhost:3001/questions/';
+        
         var question, correct_a, incorrect_a;
 
         fetch(url)
@@ -58,6 +58,67 @@ module.exports = {
                 //dostop do arraya :  tenQuestionArray[i].correct / .question / .incorrect
         })
     },
+
+    /**
+    * playController.getten()
+    */
+    //Gets data from database (play.db) + calculates SCORE + calculates time + update database
+    calculate: function(req, res){
+        var id = req.params.id;
+        var newScore = 0;
+        var grade = 0;
+        var exponent = 0;
+        
+
+        PlayModel.findOne({_id: id}, function (err, play) {
+            //TODO Fix the formula
+            grade = play.correct;
+            exponent = -0.2 * Math.abs(play.endingTime - play.startingTime)/1000;
+            newScore = Math.pow((grade), exponent) * 1000;
+
+            console.log("Score: " + newScore);
+
+            //Save new Score to database
+            play.userID = req.body.userID ? req.body.userID : play.userID;
+			play.score = newScore;
+			play.startingTime = req.body.startingTime ? req.body.startingTime : play.startingTime;
+			play.endingTime = req.body.endingTime ? req.body.endingTime : play.endingTime;
+			
+            play.save(function (err, play) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when updating play.',
+                        error: err
+                    });
+                }
+            });
+
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting play.',
+                    error: err
+                });
+            }
+
+            if (!play) {
+                return res.status(404).json({
+                    message: 'No such play'
+                });
+            }
+
+            return res.json(play);
+        });
+    },
+
+    //Gets user and his stats
+    getuser: function(req, res){
+        var id = req.params.id;
+
+        PlayModel.find({userID: id}, function (err, play) {
+            return res.json(play);
+        });
+    },
+
 
     /**
      * playController.show()
@@ -108,6 +169,7 @@ module.exports = {
         });
     },
 
+
     /**
      * playController.update()
      */
@@ -129,6 +191,7 @@ module.exports = {
             }
 
             play.userID = req.body.userID ? req.body.userID : play.userID;
+            //nastavi na nov score po klicu funkcije
 			play.score = req.body.score ? req.body.score : play.score;
 			play.startingTime = req.body.startingTime ? req.body.startingTime : play.startingTime;
 			play.endingTime = req.body.endingTime ? req.body.endingTime : play.endingTime;
