@@ -51,10 +51,7 @@ function LoggedQuestion(props){
         //Calculate score and save to database
         await fetch('http://localhost:3001/play/calculate/' + data._id);
 
-
-
-
-        window.location.href = "/report";
+        window.location.href = "/profile";
     }
 
     useEffect(function(){

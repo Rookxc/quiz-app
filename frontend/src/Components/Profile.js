@@ -40,25 +40,35 @@ function Profile(props){
 
     var data = await res.json();
 
-    //setDate(data.)
     JSON.stringify(data);
-    //setPlays(data.correct);
+    console.log(data);
+    setPlays(data);
 
-    //Number of plays:
-    //data.length
-
-    console.log(data[0].incorrect);
-    setIncorrect(data[0].incorrect);
-    console.log("ksks" + incorrect);
    }
 
     return(
-        <div style={{width: "500px", marginTop: "60px", position: 'absolute', left: '50%', top: '40%', transform: 'translate(-50%, -50%)', 
-        backgroundColor: "lightGray", padding: "30px", borderRadius:"35px", borderColor: "#343a40", borderStyle: "solid", borderWidth: "10px"}}>
-           <p style={{marginTop: "30px"}}>Username: <b>{username}</b></p>
-           <p>Email: <b>{email}</b></p>
-           <Button text="Logout" onClick={Logout}></Button>
-        </div>
+            <div className="row d-flex justify-content-center">
+                <div className="col-md-4">
+                    <div style={{ marginTop: "60px", backgroundColor: "lightGray", padding: "30px", borderRadius:"35px", borderColor: "#343a40", borderStyle: "solid", borderWidth: "10px"}}>
+                        <p style={{marginTop: "30px"}}>Username: <b>{username}</b></p>
+                        <p>Email: <b>{email}</b></p>
+                        <Button text="Logout" onClick={Logout}></Button>
+                    </div>
+
+                    {plays.map((play) => (
+                        <div>
+                            <div style={{ marginTop: "20px", backgroundColor: "lightGray", padding: "30px", borderRadius:"35px", borderColor: "#6e7985", borderStyle: "solid", borderWidth: "10px"}}>
+                                <h5 style={{marginTop: "10px"}}>Date: <b>{play.startingTime}</b></h5>
+                                <p style={{marginTop: "10px"}}>Incorrect answers: <b>{play.incorrect}</b></p>
+                                <p style={{marginTop: "10px"}}>Correct answers: <b>{play.correct}</b></p>
+                                <p style={{marginTop: "10px"}}>Score: <b>{play.score}</b></p> 
+                                <Button text="Questions"></Button>
+                            </div>
+                        </div>      
+                    ))}
+                 
+                </div>    
+            </div>
     )
 }
 

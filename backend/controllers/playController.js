@@ -73,7 +73,7 @@ module.exports = {
         PlayModel.findOne({_id: id}, function (err, play) {
             //TODO Fix the formula
             grade = play.correct;
-            exponent = -0.2 * Math.abs(play.endingTime - play.startingTime)/1000;
+            exponent = -0.2 * (Math.abs(play.endingTime - play.startingTime)/1000);
             newScore = Math.pow((grade), exponent) * 1000;
 
             console.log("Score: " + newScore);
