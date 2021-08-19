@@ -1,4 +1,4 @@
-# quiz-app
+# Quizify
 Quiz app made in MERN stack.
 
 
