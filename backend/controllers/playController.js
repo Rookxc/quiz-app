@@ -50,7 +50,23 @@ module.exports = {
     },
 
     sortByTime: function(req, res){
-        PlayModel.find().sort("-correct").exec(function (err, plays) {
+        PlayModel.find(function (err, plays) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting play.',
+                    error: err
+                });
+            }
+
+            return res.json(plays);
+        });
+    },
+
+    sortByToday: function(req, res){
+        var startOfToday = new Date();
+        startOfToday.setHours(0,0,0,0);
+
+        PlayModel.find({ "startingTime": { "$gte": startOfToday } }, function (err, plays) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting play.',
