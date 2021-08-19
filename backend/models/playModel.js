@@ -10,7 +10,7 @@ var playSchema = new Schema({
 	'startingTime' : Date,
 	'endingTime' : Date,
 	'correct': Number,
-	'incorrect': Number
+	'incorrect': Number,
 });
 
 module.exports = mongoose.model('play', playSchema);

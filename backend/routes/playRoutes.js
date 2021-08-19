@@ -8,7 +8,10 @@ var playController = require('../controllers/playController.js');
 router.get('/', playController.list);
 router.get('/getten', playController.getten);
 router.get('/calculate/:id', playController.calculate);
-router.get('/getuser/:id', playController.getuser)
+router.get('/getuser/:id', playController.getuser);
+
+router.get('/score', playController.sortByScore);
+router.get('/correct', playController.sortByCorrect);
 /*
  * GET
  */

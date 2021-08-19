@@ -10,6 +10,7 @@ import Practice from './Components/Practice';
 import Profile from './Components/Profile';
 import Play from './Components/Play';
 import Report from './Components/Report'
+import Scoreboard from './Components/Scoreboard'
 
 function App() {
   return (
@@ -42,6 +43,10 @@ function App() {
       <Route path="/report">
         <Navigation/>
         <Report/>
+      </Route>
+      <Route path="/scoreboard">
+        <Navigation/>
+        <Scoreboard/>
       </Route>
       </div>
     </BrowserRouter>

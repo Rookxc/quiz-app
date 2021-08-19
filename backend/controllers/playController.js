@@ -23,6 +23,44 @@ module.exports = {
         });
     },
 
+    sortByScore: function(req, res){
+        PlayModel.find().sort("-score").exec(function (err, plays) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting play.',
+                    error: err
+                });
+            }
+
+            return res.json(plays);
+        });
+    },
+
+    sortByCorrect: function(req, res){
+        PlayModel.find().sort("-correct").exec(function (err, plays) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting play.',
+                    error: err
+                });
+            }
+
+            return res.json(plays);
+        });
+    },
+
+    sortByTime: function(req, res){
+        PlayModel.find().sort("-correct").exec(function (err, plays) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting play.',
+                    error: err
+                });
+            }
+
+            return res.json(plays);
+        });
+    },
 
     /**
     * playController.getten()
