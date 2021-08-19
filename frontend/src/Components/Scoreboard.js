@@ -9,6 +9,7 @@ function Scoreboard(props){
     const [dataByCorrect, setDataByCorrect] = useState([]);
     const [dataByToday, setDataByToday] = useState([]);
     const [dataByAllTime, setDataByAllTime] = useState([]);
+    const [dataByThisHour, setDataByThisHour] = useState([]);
 
     const [whichSort, setWhichSort] = useState([]);
 
@@ -55,6 +56,15 @@ function Scoreboard(props){
         setDataByAllTime(data);
     }
 
+    async function getDataThisHour(){
+        setWhichSort("thishour");
+        var res = await fetch('http://localhost:3001/play/thishour');
+        var data = await res.json();
+        JSON.stringify(data)
+        setDataByThisHour(data);
+    }
+
+    //Doesnt work
     async function getUserName(userID){
         console.log("USER ID " + userID);
         var res = await fetch('http://localhost:3001/users/' + userID);
@@ -70,7 +80,7 @@ function Scoreboard(props){
                 <Button text="Most correct" onClick={getDataByCorrect}></Button>
                 <Button text="Fastest time" onClick={getDataByTime}></Button>
                 <ButtonLight text="Today" onClick={getDataToday}></ButtonLight>
-                <ButtonLight text="This week" onClick={getDataToday}></ButtonLight>
+                <ButtonLight text="This hour" onClick={getDataThisHour}></ButtonLight>
                 <ButtonLight text="All time" onClick={getDataAllTime}></ButtonLight>
 
                 {dataByScore.map((data) => (
@@ -90,7 +100,7 @@ function Scoreboard(props){
                 <Button text="Most correct" onClick={getDataByCorrect}></Button>
                 <Button text="Fastest time" onClick={getDataByTime}></Button>
                 <ButtonLight text="Today" onClick={getDataToday}></ButtonLight>
-                <ButtonLight text="This week" onClick={getDataToday}></ButtonLight>
+                <ButtonLight text="This hour" onClick={getDataThisHour}></ButtonLight>
                 <ButtonLight text="All time" onClick={getDataAllTime}></ButtonLight>
     
                 {dataByCorrect.map((data) => (
@@ -110,7 +120,7 @@ function Scoreboard(props){
                 <Button text="Most correct" onClick={getDataByCorrect}></Button>
                 <Button text="Fastest time" onClick={getDataByTime}></Button>
                 <ButtonLight text="Today" onClick={getDataToday}></ButtonLight>
-                <ButtonLight text="This week" onClick={getDataToday}></ButtonLight>
+                <ButtonLight text="This hour" onClick={getDataThisHour}></ButtonLight>
                 <ButtonLight text="All time" onClick={getDataAllTime}></ButtonLight>
 
                 <h3 style={{marginTop: "70px"}}>This feature is not yet done! :(</h3>
@@ -125,7 +135,7 @@ function Scoreboard(props){
                 <Button text="Most correct" onClick={getDataByCorrect}></Button>
                 <Button text="Fastest time" onClick={getDataByTime}></Button>
                 <ButtonLight text="Today" onClick={getDataToday}></ButtonLight>
-                <ButtonLight text="This week" onClick={getDataToday}></ButtonLight>
+                <ButtonLight text="This hour" onClick={getDataThisHour}></ButtonLight>
                 <ButtonLight text="All time" onClick={getDataAllTime}></ButtonLight>
 
                 {dataByToday.map((data) => (
@@ -145,10 +155,30 @@ function Scoreboard(props){
                 <Button text="Most correct" onClick={getDataByCorrect}></Button>
                 <Button text="Fastest time" onClick={getDataByTime}></Button>
                 <ButtonLight text="Today" onClick={getDataToday}></ButtonLight>
-                <ButtonLight text="This week" onClick={getDataToday}></ButtonLight>
+                <ButtonLight text="This hour" onClick={getDataThisHour}></ButtonLight>
                 <ButtonLight text="All time" onClick={getDataAllTime}></ButtonLight>
 
                 {dataByAllTime.map((data) => (
+                            <div>
+                                <div style={{ marginTop: "20px", backgroundColor: "lightGray", padding: "30px", borderRadius:"35px", borderColor: "#6e7985", borderStyle: "solid", borderWidth: "10px"}}>
+                                    <h5 style={{marginTop: "10px"}}>Score: <b>{data.score}</b>  by user <b>{data.userID}</b> by date <b>{data.startingTime}</b></h5>
+                                </div>
+                            </div>      
+                        ))}
+            </div>
+        )
+    }
+    else if(whichSort == "thishour"){
+        return(
+            <div>
+               <Button text="Sort by score" onClick={getDataByScore}></Button>
+                <Button text="Most correct" onClick={getDataByCorrect}></Button>
+                <Button text="Fastest time" onClick={getDataByTime}></Button>
+                <ButtonLight text="Today" onClick={getDataToday}></ButtonLight>
+                <ButtonLight text="This hour" onClick={getDataThisHour}></ButtonLight>
+                <ButtonLight text="All time" onClick={getDataAllTime}></ButtonLight>
+
+                {dataByThisHour.map((data) => (
                             <div>
                                 <div style={{ marginTop: "20px", backgroundColor: "lightGray", padding: "30px", borderRadius:"35px", borderColor: "#6e7985", borderStyle: "solid", borderWidth: "10px"}}>
                                     <h5 style={{marginTop: "10px"}}>Score: <b>{data.score}</b>  by user <b>{data.userID}</b> by date <b>{data.startingTime}</b></h5>
@@ -165,7 +195,7 @@ function Scoreboard(props){
                 <Button text="Most correct" onClick={getDataByCorrect}></Button>
                 <Button text="Fastest time" onClick={getDataByTime}></Button>
                 <ButtonLight text="Today" onClick={getDataToday}></ButtonLight>
-                <ButtonLight text="This week" onClick={getDataToday}></ButtonLight>
+                <ButtonLight text="This hour" onClick={getDataThisHour}></ButtonLight>
                 <ButtonLight text="All time" onClick={getDataAllTime}></ButtonLight>
                 
             </div>      

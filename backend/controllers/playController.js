@@ -78,6 +78,23 @@ module.exports = {
         });
     },
 
+    sortByThisHour: function(req, res){
+        var lastHour = new Date();
+        lastHour.setHours(lastHour.getHours()-1);
+
+
+        PlayModel.find({ "startingTime": { "$gte": lastHour } }, function (err, plays) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting play.',
+                    error: err
+                });
+            }
+
+            return res.json(plays);
+        });
+    },
+
     /**
     * playController.getten()
     */
