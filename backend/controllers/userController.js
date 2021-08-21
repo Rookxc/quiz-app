@@ -74,7 +74,8 @@ module.exports = {
             }
           });
         }
-      },
+    },
+    
 
     /**
      * userController.show()

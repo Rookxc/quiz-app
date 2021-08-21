@@ -11,7 +11,7 @@ module.exports = {
      * playController.list()
      */
     list: function (req, res) {
-        PlayModel.find(function (err, plays) {
+        PlayModel.find().populate("userID").exec(function (err, plays) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting play.',
@@ -24,7 +24,7 @@ module.exports = {
     },
 
     sortByScore: function(req, res){
-        PlayModel.find().sort("-score").exec(function (err, plays) {
+        PlayModel.find().sort("-score").populate("userID").exec(function (err, plays) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting play.',
@@ -37,7 +37,7 @@ module.exports = {
     },
 
     sortByCorrect: function(req, res){
-        PlayModel.find().sort("-correct").exec(function (err, plays) {
+        PlayModel.find().sort("-correct").populate("userID").exec(function (err, plays) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting play.',
@@ -50,7 +50,7 @@ module.exports = {
     },
 
     sortByTime: function(req, res){
-        PlayModel.find(function (err, plays) {
+        PlayModel.find.populate("userID")(function (err, plays) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting play.',
@@ -75,7 +75,7 @@ module.exports = {
             }
 
             return res.json(plays);
-        });
+        }).populate("userID");
     },
 
     sortByThisHour: function(req, res){
@@ -92,7 +92,7 @@ module.exports = {
             }
 
             return res.json(plays);
-        });
+        }).populate("userID");
     },
 
     /**

@@ -11,6 +11,7 @@ var playSchema = new Schema({
 	'endingTime' : Date,
 	'correct': Number,
 	'incorrect': Number,
+	'questions': String
 });
 
 module.exports = mongoose.model('play', playSchema);
