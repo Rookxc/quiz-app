@@ -1,13 +1,40 @@
 import Button from './Button'
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 function Admin(){
     const [question, setQuestion] = useState('');
+    const [admin, setAdmin] = useState('');
     const [questionID, setQuestionID] = useState('');
     const [correct, setCorrect] = useState('');
     const [incorrect1, setIncorrect1] = useState('');
     const [incorrect2, setIncorrect2] = useState('');
     const [incorrect3, setIncorrect3] = useState('');
+
+    useEffect(function(){
+        isAdmin();
+    }, []);
+
+    async function isAdmin(){
+        var data;
+        var userID = localStorage.getItem("userID");
+        const res = await fetch('http://localhost:3001/users/' + userID, {
+            method: 'GET',
+            credentials: 'include',
+            headers:{
+                'Content-type': 'application/json'
+            },
+        }).then(async response => {
+            data = await response.json();
+        });
+
+        //alert(data.admin);
+
+        if(data.admin == true){
+            setAdmin(true);
+        }
+       
+        
+    }
 
     async function Insert(){
         console.log("Question: " + question);
@@ -138,182 +165,191 @@ function Admin(){
         setIncorrect3("");
     }
 
-    return(
-        <div>     
-            <div className="row d-flex justify-content-center">
-                <form className="col-md-4" onSubmit={Insert}>
-                    <h2 style={{marginTop:"50px", marginBottom: "25px"}}>Add question </h2>
-                        <input
-                            style={{marginBottom: "15px"}}
-                            required={true}
-                            type="text"
-                            className="form-control "
-                            name="question"
-                            placeholder="Question"
-                            value={question}
-                            onChange={(e) => {
-                                setQuestion(e.target.value);
-                            }}
-                        />
-                        <input
-                            style={{marginBottom: "15px"}}
-                            required={true}
-                            type="text"
-                            className="form-control"
-                            name="correct"
-                            placeholder="Correct answer"
-                            value={correct}
-                            onChange={(e) => {
-                                setCorrect(e.target.value);
-                            }}
-                        />
-                        <input
-                            style={{marginBottom: "15px"}}
-                            required={true}
-                            type="text"
-                            className="form-control"
-                            name="incorrect1"
-                            placeholder="Incorrect answer (1)"
-                            value={incorrect1}
-                            onChange={(e) => {
-                                setIncorrect1(e.target.value);
-                            }}
-                        />
-                        <input
-                            style={{marginBottom: "15px"}}
-                            required={true}
-                            type="text"
-                            className="form-control"
-                            name="incorrect2"
-                            placeholder="Incorrect answer (2)"
-                            value={incorrect2}
-                            onChange={(e) => {
-                                setIncorrect2(e.target.value);
-                            }}
-                        />
-                        <input
-                            style={{marginBottom: "15px"}}
-                            required={true}
-                            type="text"
-                            className="form-control"
-                            name="incorrect3"
-                            placeholder="Incorrect answer (3)"
-                            value={incorrect3}
-                            onChange={(e) => {
-                                setIncorrect3(e.target.value);
-                            }}
-                        />
-                    <Button text="Add"/>    
-                </form>
+    if(admin==true){
+        return(
+            <div>     
+                <div className="row d-flex justify-content-center">
+                    <form className="col-md-4" onSubmit={Insert}>
+                        <h2 style={{marginTop:"50px", marginBottom: "25px"}}>Add question </h2>
+                            <input
+                                style={{marginBottom: "15px"}}
+                                required={true}
+                                type="text"
+                                className="form-control "
+                                name="question"
+                                placeholder="Question"
+                                value={question}
+                                onChange={(e) => {
+                                    setQuestion(e.target.value);
+                                }}
+                            />
+                            <input
+                                style={{marginBottom: "15px"}}
+                                required={true}
+                                type="text"
+                                className="form-control"
+                                name="correct"
+                                placeholder="Correct answer"
+                                value={correct}
+                                onChange={(e) => {
+                                    setCorrect(e.target.value);
+                                }}
+                            />
+                            <input
+                                style={{marginBottom: "15px"}}
+                                required={true}
+                                type="text"
+                                className="form-control"
+                                name="incorrect1"
+                                placeholder="Incorrect answer (1)"
+                                value={incorrect1}
+                                onChange={(e) => {
+                                    setIncorrect1(e.target.value);
+                                }}
+                            />
+                            <input
+                                style={{marginBottom: "15px"}}
+                                required={true}
+                                type="text"
+                                className="form-control"
+                                name="incorrect2"
+                                placeholder="Incorrect answer (2)"
+                                value={incorrect2}
+                                onChange={(e) => {
+                                    setIncorrect2(e.target.value);
+                                }}
+                            />
+                            <input
+                                style={{marginBottom: "15px"}}
+                                required={true}
+                                type="text"
+                                className="form-control"
+                                name="incorrect3"
+                                placeholder="Incorrect answer (3)"
+                                value={incorrect3}
+                                onChange={(e) => {
+                                    setIncorrect3(e.target.value);
+                                }}
+                            />
+                        <Button text="Add"/>    
+                    </form>
+                </div>
+                <hr></hr>
+                
+                <div className="row d-flex justify-content-center">
+                    <form className="col-md-4" onSubmit={Delete}>
+                        <h2 style={{marginTop:"25px", marginBottom: "25px"}}>Delete question </h2>
+                            <input
+                                style={{marginBottom: "15px"}}
+                                required={true}
+                                type="text"
+                                className="form-control "
+                                name="question"
+                                placeholder="ID"
+                                value={questionID}
+                                onChange={(e) => {
+                                    setQuestionID(e.target.value);
+                                }}
+                            />
+                        <Button text="Delete"/>    
+                    </form>
+                </div>
+                <hr></hr>
+    
+                <div className="row d-flex justify-content-center">
+                    <form className="col-md-4" onSubmit={GetData}>
+                        <h2 style={{marginTop:"25px", marginBottom: "25px"}}>Request question </h2>
+                            <input
+                                style={{marginBottom: "15px"}}
+                                type="text"
+                                className="form-control "
+                                name="questionID"
+                                placeholder="ID"
+                                required={true}
+                                value={questionID}
+                                onChange={(e) => {
+                                    setQuestionID(e.target.value);
+                                }}
+                            />
+                        <Button text="Get data"/>    
+                    </form>
+                    <form className="col-md-4" onSubmit={Update}>
+                        <h2 style={{marginTop:"25px", marginBottom: "25px"}}>Update question </h2>
+                            <input
+                                style={{marginBottom: "15px"}}
+                                type="text"
+                                className="form-control "
+                                name="question"
+                                placeholder="Question"
+                                required={true}
+                                value={question}
+                                onChange={(e) => {
+                                    setQuestionID(e.target.value);
+                                }}
+                            />
+                             <input
+                                style={{marginBottom: "15px"}}
+                                required={true}
+                                type="text"
+                                className="form-control"
+                                name="correct"
+                                placeholder="Correct answer"
+                                value={correct}
+                                onChange={(e) => {
+                                    setCorrect(e.target.value);
+                                }}
+                            />
+                            <input
+                                style={{marginBottom: "15px"}}
+                                required={true}
+                                type="text"
+                                className="form-control"
+                                name="incorrect1"
+                                placeholder="Incorrect answer (1)"
+                                value={incorrect1}
+                                onChange={(e) => {
+                                    setIncorrect1(e.target.value);
+                                }}
+                            />
+                            <input
+                                style={{marginBottom: "15px"}}
+                                required={true}
+                                type="text"
+                                className="form-control"
+                                name="incorrect2"
+                                placeholder="Incorrect answer (2)"
+                                value={incorrect2}
+                                onChange={(e) => {
+                                    setIncorrect2(e.target.value);
+                                }}
+                            />
+                            <input
+                                style={{marginBottom: "15px"}}
+                                required={true}
+                                type="text"
+                                className="form-control"
+                                name="incorrect3"
+                                placeholder="Incorrect answer (3)"
+                                value={incorrect3}
+                                onChange={(e) => {
+                                    setIncorrect3(e.target.value);
+                                }}
+                            />
+                        <Button text="Update"/>    
+                    </form>
+    
+                </div>
+                <hr></hr>
             </div>
-            <hr></hr>
-            
-            <div className="row d-flex justify-content-center">
-                <form className="col-md-4" onSubmit={Delete}>
-                    <h2 style={{marginTop:"25px", marginBottom: "25px"}}>Delete question </h2>
-                        <input
-                            style={{marginBottom: "15px"}}
-                            required={true}
-                            type="text"
-                            className="form-control "
-                            name="question"
-                            placeholder="ID"
-                            value={questionID}
-                            onChange={(e) => {
-                                setQuestionID(e.target.value);
-                            }}
-                        />
-                    <Button text="Delete"/>    
-                </form>
-            </div>
-            <hr></hr>
-
-            <div className="row d-flex justify-content-center">
-                <form className="col-md-4" onSubmit={GetData}>
-                    <h2 style={{marginTop:"25px", marginBottom: "25px"}}>Request question </h2>
-                        <input
-                            style={{marginBottom: "15px"}}
-                            type="text"
-                            className="form-control "
-                            name="questionID"
-                            placeholder="ID"
-                            required={true}
-                            value={questionID}
-                            onChange={(e) => {
-                                setQuestionID(e.target.value);
-                            }}
-                        />
-                    <Button text="Get data"/>    
-                </form>
-                <form className="col-md-4" onSubmit={Update}>
-                    <h2 style={{marginTop:"25px", marginBottom: "25px"}}>Update question </h2>
-                        <input
-                            style={{marginBottom: "15px"}}
-                            type="text"
-                            className="form-control "
-                            name="question"
-                            placeholder="Question"
-                            required={true}
-                            value={question}
-                            onChange={(e) => {
-                                setQuestionID(e.target.value);
-                            }}
-                        />
-                         <input
-                            style={{marginBottom: "15px"}}
-                            required={true}
-                            type="text"
-                            className="form-control"
-                            name="correct"
-                            placeholder="Correct answer"
-                            value={correct}
-                            onChange={(e) => {
-                                setCorrect(e.target.value);
-                            }}
-                        />
-                        <input
-                            style={{marginBottom: "15px"}}
-                            required={true}
-                            type="text"
-                            className="form-control"
-                            name="incorrect1"
-                            placeholder="Incorrect answer (1)"
-                            value={incorrect1}
-                            onChange={(e) => {
-                                setIncorrect1(e.target.value);
-                            }}
-                        />
-                        <input
-                            style={{marginBottom: "15px"}}
-                            required={true}
-                            type="text"
-                            className="form-control"
-                            name="incorrect2"
-                            placeholder="Incorrect answer (2)"
-                            value={incorrect2}
-                            onChange={(e) => {
-                                setIncorrect2(e.target.value);
-                            }}
-                        />
-                        <input
-                            style={{marginBottom: "15px"}}
-                            required={true}
-                            type="text"
-                            className="form-control"
-                            name="incorrect3"
-                            placeholder="Incorrect answer (3)"
-                            value={incorrect3}
-                            onChange={(e) => {
-                                setIncorrect3(e.target.value);
-                            }}
-                        />
-                    <Button text="Update"/>    
-                </form>
-
-            </div>
-            <hr></hr>
-        </div>
-    )
+        )
+       
+    }
+    else{
+        return(
+            <p>Not an admin!</p>
+        )
+    }
+    
 }
 
 export default Admin;
