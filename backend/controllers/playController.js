@@ -140,8 +140,6 @@ module.exports = {
         var finalTime = 0;
 
         PlayModel.findOne({_id: id}, function (err, play) {
-            //TODO Fix the formula
-
             finalTime = (play.endingTime - play.startingTime)/1000;
             grade = play.correct;
             exponent = -0.2 * (Math.abs(play.endingTime - play.startingTime)/1000);

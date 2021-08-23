@@ -44,7 +44,6 @@ function Question(props){
             }
 
         shuffle(answers);
-        console.log("Pravilni odgovor: " + questions[rnd].correct)
 
         if(res.status === 200){ 
             setQuestion(questions[rnd]);
@@ -68,7 +67,6 @@ function Question(props){
     var userAnswers = "";
     
     async function CheckAnswer(){
-        console.log(question.correct);
         if(userAnswers == question.correct){
             setCorrectCount(correctCount+1);
             setStatus('👍');
@@ -93,7 +91,7 @@ function Question(props){
                     <p>
                         {answers.map((answer) => (
                             <label style={{margin: "15px", color: 'white'}}>
-                                <input style={{color: 'white'}} key={question._id} type="checkbox" value={answer} onChange={handleChange}/> {answer}
+                                <input style={{color: 'white'}}  type="checkbox" value={answer} onChange={handleChange}/> {answer}
                             </label>
                                 
                         ))}

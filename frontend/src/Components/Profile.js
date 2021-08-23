@@ -11,13 +11,10 @@ function Logout(){
 function Profile(props){ 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    const [date, setDate] = useState(0);
-    const [correct, setCorrect] = useState(0);
-    const [incorrect, setIncorrect] = useState(0);
-    const [score, setScore] = useState(0);
     const [plays, setPlays] = useState([]);
     const [questions, setQuestions] = useState([]);
     const [answers, setAnswers] = useState([]);
+    const [newUser, setNewUser] = useState();
 
     useEffect(function(){
         getUser();
@@ -41,6 +38,10 @@ function Profile(props){
 
         var data = await res.json();
 
+        if(data.length == 0){
+            setNewUser(true)
+        }
+
         JSON.stringify(data);
         setPlays(data);
     }
@@ -53,14 +54,27 @@ function Profile(props){
 
     async function getQuestions(id){
         var res = await fetch('http://localhost:3001/play/' + id);
-        console.log('http://localhost:3001/play/' + id);
         var data = await res.json();
-        console.log(data);
         setQuestions(data.questions); 
         setAnswers(data.correctAnswers);      
     }
 
-    return(
+    if(newUser == true){
+        return(
+            <div className="row d-flex justify-content-center">
+                <div className="col-md-4">
+                    <div style={{ marginTop: "60px", backgroundColor: "#abb2ba", padding: "30px", borderRadius:"35px", borderColor: "#343a40", borderStyle: "solid", borderWidth: "10px"}}>
+                        <p style={{marginTop: "30px"}}>Username: <b>{username}</b></p>
+                        <p>Email: <b>{email}</b></p>
+                        <Button text="Logout" onClick={Logout}></Button>
+                    </div>
+            </div>
+        </div>
+        )    
+    }
+
+    else{
+        return(
             <div className="row d-flex justify-content-center">
                 <div className="col-md-4">
                     <div style={{ marginTop: "60px", backgroundColor: "#abb2ba", padding: "30px", borderRadius:"35px", borderColor: "#343a40", borderStyle: "solid", borderWidth: "10px"}}>
@@ -69,7 +83,6 @@ function Profile(props){
                         <Button text="Logout" onClick={Logout}></Button>
                     </div>
 
-                    
                     {plays.map((play) => (
                         <div key={play._id}>
                             <div style={{ marginTop: "20px", backgroundColor: "lightGray", padding: "30px", borderRadius:"35px", borderColor: "#6e7985", borderStyle: "solid", borderWidth: "10px"}}>
@@ -106,6 +119,9 @@ function Profile(props){
                 </div>    
             </div>
     )
-}
+        }
+        }
+   
+    
 
 export default Profile;
