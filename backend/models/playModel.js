@@ -9,9 +9,10 @@ var playSchema = new Schema({
 	'score' : Number,
 	'startingTime' : Date,
 	'endingTime' : Date,
+	'playTime': Number,
 	'correct': Number,
 	'incorrect': Number,
-	'questions': String
+	'questions': [String]
 });
 
 module.exports = mongoose.model('play', playSchema);

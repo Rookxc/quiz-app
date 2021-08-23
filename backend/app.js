@@ -4,7 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-
 var mongoose = require('mongoose');
 var mongoDB = 'mongodb+srv://rok:rok123@cluster0.kt31u.mongodb.net/quizDB?retryWrites=true&w=majority';
 mongoose.connect(mongoDB);
@@ -19,6 +18,7 @@ var questionsRouter = require('./routes/questionRoutes');
 var playRouter = require('./routes/playRoutes');
 
 var app = express();
+
 var exphbs  = require('express-handlebars');
 
 //CORS
@@ -81,5 +81,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;

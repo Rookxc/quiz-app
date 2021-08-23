@@ -51,6 +51,10 @@ function Profile(props){
         return ret;
     }
 
+    function getQuestions(){
+        
+    }
+
     return(
             <div className="row d-flex justify-content-center">
                 <div className="col-md-4">
@@ -67,7 +71,7 @@ function Profile(props){
                                 <p style={{marginTop: "10px"}}>Incorrect answers: <b>{play.incorrect}</b></p>
                                 <p style={{marginTop: "10px"}}>Correct answers: <b>{play.correct}</b></p>
                                 <p style={{marginTop: "10px"}}>Score: <b>{Math.round(play.score).toFixed(2)}</b></p> 
-                                <Button text="Questions"></Button>
+                                <Button text="Questions" onClick={getQuestions}></Button>
                             </div>
                         </div>      
                     ))}

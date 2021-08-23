@@ -7,6 +7,7 @@ import ButtonLight from './ButtonLight2'
 function Scoreboard(props){
     const [dataByScore, setDataByScore] = useState([]);
     const [dataByCorrect, setDataByCorrect] = useState([]);
+    const [dataByTime, setDataByTime] = useState([]);
     const [dataByToday, setDataByToday] = useState([]);
     const [dataByAllTime, setDataByAllTime] = useState([]);
     const [dataByThisHour, setDataByThisHour] = useState([]);
@@ -17,12 +18,14 @@ function Scoreboard(props){
         
     }, []);
 
+    //OK
     function formatDate (date) {
         date = new Date(date);
         var ret = date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear() + " " + (date.getHours() + 1) + ":" + (date.getMinutes() >= 10 ? date.getMinutes() : "0" + date.getMinutes());
         return ret;
     }
 
+    //OK
     async function getDataByScore(){
         setWhichSort("score");
         var res = await fetch('http://localhost:3001/play/score');
@@ -30,7 +33,8 @@ function Scoreboard(props){
 
         setDataByScore(data);
     }
-    
+
+    //OK
     async function getDataByCorrect(){
         setWhichSort("correct");
         var res = await fetch('http://localhost:3001/play/correct');
@@ -39,10 +43,16 @@ function Scoreboard(props){
         setDataByCorrect(data);
     }
 
+    //OK
     async function getDataByTime(){
         setWhichSort("time");
+        var res = await fetch('http://localhost:3001/play/time');
+        var data = await res.json();
+        
+        setDataByTime(data);
     }
 
+    //OK
     async function getDataToday(){
         setWhichSort("today");
         var res = await fetch('http://localhost:3001/play/today');
@@ -51,6 +61,7 @@ function Scoreboard(props){
         setDataByToday(data);
     }
 
+    //OK
     async function getDataAllTime(){
         setWhichSort("alltime");
         var res = await fetch('http://localhost:3001/play/');
@@ -59,6 +70,7 @@ function Scoreboard(props){
         setDataByAllTime(data);
     }
 
+    //OK
     async function getDataThisHour(){
         setWhichSort("thishour");
         var res = await fetch('http://localhost:3001/play/thishour');
@@ -119,7 +131,13 @@ function Scoreboard(props){
                 <ButtonLight text="This hour" onClick={getDataThisHour}></ButtonLight>
                 <ButtonLight text="All time" onClick={getDataAllTime}></ButtonLight>
 
-                <h3 style={{marginTop: "70px"}}>This feature is not yet done! :(</h3>
+                {dataByTime.map((data) => (
+                    <div key={data._id} className="row d-flex justify-content-center w-100">
+                        <div style={{ marginTop: "20px", backgroundColor: "lightGray", padding: "30px", borderRadius:"35px", borderColor: "#6e7985", borderStyle: "solid", borderWidth: "10px"}}>
+                                <h5 style={{marginTop: "10px"}}>Time: <b>{data.playTime}</b>  by user <b>{data.userID.username}</b></h5>
+                        </div>
+                    </div>      
+                ))}
 
             </div>
         )
@@ -193,7 +211,6 @@ function Scoreboard(props){
                 <ButtonLight text="Today" onClick={getDataToday}></ButtonLight>
                 <ButtonLight text="This hour" onClick={getDataThisHour}></ButtonLight>
                 <ButtonLight text="All time" onClick={getDataAllTime}></ButtonLight>
-                
             </div>      
         )              
     }

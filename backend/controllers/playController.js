@@ -36,8 +36,8 @@ module.exports = {
         });
     },
 
-    sortByCorrect: function(req, res){
-        PlayModel.find().sort("-correct").populate("userID").exec(function (err, plays) {
+    sortByFastestTime: function(req, res){  
+        PlayModel.find().sort("playTime").populate("userID").exec(function (err, plays) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting play.',
@@ -49,8 +49,8 @@ module.exports = {
         });
     },
 
-    sortByTime: function(req, res){
-        PlayModel.find.populate("userID")(function (err, plays) {
+    sortByCorrect: function(req, res){
+        PlayModel.find().sort("-correct").populate("userID").exec(function (err, plays) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting play.',
@@ -82,7 +82,6 @@ module.exports = {
         var lastHour = new Date();
         lastHour.setHours(lastHour.getHours()-1);
 
-
         PlayModel.find({ "startingTime": { "$gte": lastHour } }, function (err, plays) {
             if (err) {
                 return res.status(500).json({
@@ -94,6 +93,7 @@ module.exports = {
             return res.json(plays);
         }).populate("userID");
     },
+
 
     /**
     * playController.getten()
@@ -119,10 +119,8 @@ module.exports = {
                 for(let i = 0; i < 10; i++){
                     const rnd = parseInt(min + Math.random() * (max - min));
                     question = obj["data"][rnd];
-                    //console.log(question);
                     
                     tenQuestionArray.push(question);
-                    //console.log(i + "aa" + JSON.stringify(tenQuestionArray[i]));
                 }
                 
                 res.send({tenQuestionArray});
@@ -139,10 +137,12 @@ module.exports = {
         var newScore = 0;
         var grade = 0;
         var exponent = 0;
-        
+        var finalTime = 0;
 
         PlayModel.findOne({_id: id}, function (err, play) {
             //TODO Fix the formula
+
+            finalTime = (play.endingTime - play.startingTime)/1000;
             grade = play.correct;
             exponent = -0.2 * (Math.abs(play.endingTime - play.startingTime)/1000);
             newScore = Math.pow((grade), exponent) * 1000;
@@ -154,7 +154,8 @@ module.exports = {
 			play.score = newScore;
 			play.startingTime = req.body.startingTime ? req.body.startingTime : play.startingTime;
 			play.endingTime = req.body.endingTime ? req.body.endingTime : play.endingTime;
-			
+			play.playTime = finalTime;
+
             play.save(function (err, play) {
                 if (err) {
                     return res.status(500).json({
@@ -224,8 +225,10 @@ module.exports = {
 			score : req.body.score,
 			startingTime : req.body.startingTime,
 			endingTime : req.body.endingTime,
+            playTime: req.body.playTime,
             correct:  req.body.correct,
-            incorrect: req.body.incorrect
+            incorrect: req.body.incorrect,
+            questions: req.body.questions
         });
 
         play.save(function (err, play) {
@@ -262,7 +265,6 @@ module.exports = {
             }
 
             play.userID = req.body.userID ? req.body.userID : play.userID;
-            //nastavi na nov score po klicu funkcije
 			play.score = req.body.score ? req.body.score : play.score;
 			play.startingTime = req.body.startingTime ? req.body.startingTime : play.startingTime;
 			play.endingTime = req.body.endingTime ? req.body.endingTime : play.endingTime;

@@ -9,6 +9,7 @@ function LoggedQuestion(props){
     const [correctCount, setCorrectCount] = useState(0);
     const [incorrectCount, setIncorrectCount] = useState(0);
     const [answers, setAnswers] = useState([]);
+    const [ARRAY, setARRAY] = useState([]);
 
     //var questionCount = 0;
     const [questionCount, setQuestionCount] = useState(0);
@@ -30,15 +31,17 @@ function LoggedQuestion(props){
                 startingTime: sessionStorage.getItem("starting"),
                 endingTime: Date.now(),
                 score: 0,
+                questions: ARRAY,
             })
         })
 
         var status = await res.status;
         var data = null;
         
+       
         if(status === 201){
             data = await res.json();
-            console.log("Sucess!");
+            console.log("Success!");
         }
         else{
             console.log("Didn't send");
@@ -58,23 +61,23 @@ function LoggedQuestion(props){
          getQuestion();
          sessionStorage.setItem("starting", Date.now());
          setStartingTime(Date.now());
-         console.log(startingTime);
     }, []);
 
     async function getQuestion(){
         if(questionCount == 10){
-            saveScore();       
+            saveScore();   
         }
+
+        var res = await fetch('http://localhost:3001/play/getten');
+        
+        var data = await res.json();
+        const questions = data.tenQuestionArray;
 
         setQuestionCount(questionCount+1);
 
         setDisable(false);
         setStatus("🖐");
 
-        var res = await fetch('http://localhost:3001/play/getten');
-        
-        var data = await res.json();
-        const questions = data.tenQuestionArray;
         JSON.stringify(questions)
         
         //Checks if there are only 2 possible answers
@@ -92,6 +95,7 @@ function LoggedQuestion(props){
         shuffle(answers);        
 
         if(res.status === 200){ 
+            ARRAY.push(questions[questionCount].question);
             setQuestion(questions[questionCount]);
         }
     }
@@ -113,7 +117,6 @@ function LoggedQuestion(props){
     var userAnswers = "";
     
     async function CheckAnswer(){
-        console.log(question.correct);
         if(userAnswers == question.correct){
             setCorrectCount(correctCount+1);
             setStatus('👍');

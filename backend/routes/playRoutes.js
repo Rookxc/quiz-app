@@ -12,8 +12,12 @@ router.get('/getuser/:id', playController.getuser);
 
 router.get('/score', playController.sortByScore);
 router.get('/correct', playController.sortByCorrect);
+router.get('/time', playController.sortByFastestTime);
+
 router.get('/today', playController.sortByToday);
 router.get('/thishour', playController.sortByThisHour);
+
+
 /*
  * GET
  */
