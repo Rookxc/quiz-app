@@ -37,9 +37,10 @@ function Profile(props){
         var res = await fetch('http://localhost:3001/play/getuser/' + userID);
 
         var data = await res.json();
+        console.log(data);
 
-        if(data.length == 0){
-            setNewUser(true)
+        if(data.message == "Error when getting play."){
+            setNewUser(true);
         }
 
         JSON.stringify(data);
@@ -68,11 +69,10 @@ function Profile(props){
                         <p>Email: <b>{email}</b></p>
                         <Button text="Logout" onClick={Logout}></Button>
                     </div>
+                </div>
             </div>
-        </div>
         )    
     }
-
     else{
         return(
             <div className="row d-flex justify-content-center">

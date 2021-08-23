@@ -27,7 +27,7 @@ function Register(){
         setPassword("");
         setEmail("");
 
-        window.location.href = "/profile";
+        window.location.href = "/login";
     }
 
 
