@@ -12,7 +12,8 @@ var playSchema = new Schema({
 	'playTime': Number,
 	'correct': Number,
 	'incorrect': Number,
-	'questions': [String]
+	'questions': [String],
+	'correctAnswers': [String]
 });
 
 module.exports = mongoose.model('play', playSchema);

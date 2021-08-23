@@ -10,6 +10,7 @@ function LoggedQuestion(props){
     const [incorrectCount, setIncorrectCount] = useState(0);
     const [answers, setAnswers] = useState([]);
     const [ARRAY, setARRAY] = useState([]);
+    const [ARRAYANSWERS, setARRAYANSWERS] = useState([]);
 
     //var questionCount = 0;
     const [questionCount, setQuestionCount] = useState(0);
@@ -32,6 +33,7 @@ function LoggedQuestion(props){
                 endingTime: Date.now(),
                 score: 0,
                 questions: ARRAY,
+                correctAnswers: ARRAYANSWERS
             })
         })
 
@@ -96,6 +98,7 @@ function LoggedQuestion(props){
 
         if(res.status === 200){ 
             ARRAY.push(questions[questionCount].question);
+            ARRAYANSWERS.push(questions[questionCount].correct);
             setQuestion(questions[questionCount]);
         }
     }

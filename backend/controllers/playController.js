@@ -228,7 +228,8 @@ module.exports = {
             playTime: req.body.playTime,
             correct:  req.body.correct,
             incorrect: req.body.incorrect,
-            questions: req.body.questions
+            questions: req.body.questions,
+            correctAnswers: req.body.correctAnswers
         });
 
         play.save(function (err, play) {
